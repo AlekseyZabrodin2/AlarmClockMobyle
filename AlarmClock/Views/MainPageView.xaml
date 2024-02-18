@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AlarmClock.MainPageView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:localConvert="clr-namespace:AlarmClock.Converter"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:AlarmClock.ViewModels"
+    x:DataType="viewmodels:MainPageViewModel">
+
+    <ContentPage.Resources>
+        <localConvert:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,0" Spacing="25">
+
+            <Image
+                Aspect="AspectFit"
+                HeightRequest="185"
+                SemanticProperties.Description="dot net bot in a race car number eight"
+                Source="dotnet_bot.png" />
+
+            <Label
+                SemanticProperties.HeadingLevel="Level1"
+                Style="{StaticResource Headline}"
+                Text="Привет Женек и Сашулька !!!" />
+
+            <Label
+                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
+                SemanticProperties.HeadingLevel="Level2"
+                Style="{StaticResource SubHeadline}"
+                Text="Welcome to &#10;.NET Multi-platform App UI" />
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="0,15,0,0">
+
+                    <Label
+                        HeightRequest="50"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding CurrentTime}"
+                        VerticalTextAlignment="Center" />
+                </Border>
+
+                <StackLayout
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="4"
+                    Margin="0,5,0,5">
+                    <Button
+                        Command="{Binding OpenTimePickerClickedCommand}"
+                        CornerRadius="15"
+                        Text="Открыть TimePicker" />
+
+                    <TimePicker
+                        x:Name="timePicker"
+                        Margin="0,5,0,0"
+                        Background="Gray"
+                        FontAttributes="Bold"
+                        FontSize="Title"
+                        Format="HH:mm"
+                        HorizontalOptions="Fill"
+                        IsVisible="{Binding TimePickerVisible}"
+                        Time="{Binding TimeWakeUp, Mode=TwoWay}"
+                        WidthRequest="75" />
+                </StackLayout>
+
+
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,5"
+                    Background="Gray"
+                    HeightRequest="50"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center">
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="ClockStatus" />
+                            <Binding Path="CurrentTime" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+
+
+                <Switch
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Margin="20,0"
+                    HorizontalOptions="End"
+                    IsToggled="{Binding SwitchIsToggled}"
+                    OnColor="#00CD00"
+                    ThumbColor="White"
+                    VerticalOptions="Center">
+                    <Switch.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding ToggledCommandCommand}" EventName="Toggled" />
+                    </Switch.Behaviors>
+                </Switch>
+
+
+
+                <Button
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Command="{Binding StartAlarmClockCommand}"
+                    HeightRequest="50"
+                    IsEnabled="{Binding StartButtonEnabled}"
+                    Text="Start"
+                    WidthRequest="80" />
+
+                <Button
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Command="{Binding StopAlarmClockCommand}"
+                    HeightRequest="50"
+                    IsEnabled="{Binding StopButtonEnabled}"
+                    Text="Stop"
+                    WidthRequest="80" />
+
+            </Grid>
+
+
+
+            <Button
+                x:Name="CounterBtn"
+                Command="{Binding CounterClickedCommand}"
+                HorizontalOptions="Fill"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Text="{Binding CounterBtn}" />
+
+            <Button
+                x:Name="CounterBtn1"
+                Command="{Binding CounterClicked1Command}"
+                HorizontalOptions="Fill"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Text="{Binding CounterBtn1}" />
+
+
+            <!--<Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="0,5"
+                    FontSize="28"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    Text="{Binding CurrentTime}" />
+                <Entry
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="5,0,0,5"
+                    FontSize="24"
+                    HeightRequest="40"
+                    Text="{Binding MusicLocationShow, Mode=TwoWay}"
+                    VerticalTextAlignment="Center" />
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    Margin="10,0,0,0"
+                    Command="{Binding SelectMediaFileCommand}"
+                    ContentLayout="... 𝄞"
+                    FontSize="20"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    WidthRequest="80" />
+                <Border
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="3">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Entry
+                            Grid.Column="0"
+                            Margin="1"
+                            FontSize="28"
+                            HeightRequest="60"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding TimeWakeUp, Mode=TwoWay}"
+                            VerticalTextAlignment="Start"
+                            WidthRequest="150" />
+                        <Entry
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            FontSize="28"
+                            HeightRequest="60"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding TimeToPostpone, Mode=TwoWay}"
+                            VerticalTextAlignment="Start"
+                            WidthRequest="40" />
+                    </Grid>
+                </Border>
+                <Button
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Margin="10,0,0,0"
+                    Command="{Binding CreateAlarmCommand}"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    IsEnabled="{Binding CreateButtonEnabled}"
+                    Text="Create"
+                    WidthRequest="80" />
+
+                
+                    <CollectionView
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        ItemsSource="{Binding ObservedAlarms}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="55" />
+                                        </Grid.ColumnDefinitions>
+                                        --><!--<Frame
+                                            Grid.Column="0"
+                                            Margin="1"
+                                            BorderColor="Gray"
+                                            HeightRequest="25">--><!--
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label
+                                                Grid.Column="0"
+                                                Margin="1"
+                                                FontSize="12"
+                                                HeightRequest="20"
+                                                HorizontalTextAlignment="Center"
+                                                Text="{Binding AlarmClockModel.TimeWakeUpModel}"
+                                                TextColor="White"
+                                                VerticalTextAlignment="Start"
+                                                WidthRequest="100" />
+                                            --><!--<Label
+                                                        Grid.Column="1"
+                                                        Margin="5"
+                                                        Text="{Binding CurrentTime}" />-->
+                                            <!--<Label
+                                                        Grid.Column="2"
+                                                        Margin="5"
+                                                        Text="{Binding TimeToPostpone}" />-->
+                                            <!--<Label
+                                                        Grid.Column="3"
+                                                        Margin="5"
+                                                        Text="{Binding MusicLocationShow}" />--><!--
+                                            <Switch
+                                                Grid.Column="1"
+                                                IsToggled="{Binding StartAlarmClockCommand}"
+                                                Style="{StaticResource ToggleButtonStyle}" />
+                                            <Button
+                                                Grid.Column="2"
+                                                Margin="1"
+                                                Padding="5"
+                                                Command="{Binding SetOffTheAlarmCommand}"
+                                                HeightRequest="30"
+                                                IsEnabled="{Binding SetOffButtonEnabled}"
+                                                Text="SetOff"
+                                                WidthRequest="60" />
+                                            <Button
+                                                Grid.Column="3"
+                                                Margin="1"
+                                                Padding="5"
+                                                Command="{Binding StopAlarmClockCommand}"
+                                                HeightRequest="30"
+                                                IsEnabled="{Binding StopButtonEnabled}"
+                                                Text="Stop"
+                                                WidthRequest="50" />
+                                            <CheckBox
+                                                Grid.Column="4"
+                                                HeightRequest="15"
+                                                HorizontalOptions="Center"
+                                                IsChecked="{Binding AlarmClockIsSelected}"
+                                                VerticalOptions="Center"
+                                                WidthRequest="15" />
+                                        </Grid>
+                                        --><!--</Frame>--><!--
+                                        <Button
+                                            Grid.Column="1"
+                                            Margin="1"
+                                            Padding="5"
+                                            Command="{Binding DeleteAlarmCommand}"
+                                            CommandParameter="{Binding}"
+                                            HeightRequest="30"
+                                            IsVisible="{Binding AlarmClockIsSelected, Converter={StaticResource BoolToVisibilityConverter}}"
+                                            Text="Delete"
+                                            WidthRequest="50" />
+
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                
+
+                <Button
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="1"
+                    Padding="5"
+                    Command="{Binding DeleteAlarmCommand}"
+                    HeightRequest="30"
+                    Text="Delete"
+                    WidthRequest="50" />
+            </Grid>-->
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
