@@ -35,7 +35,7 @@ namespace AlarmClock.ViewModels
         [ObservableProperty]
         private bool _switchIsToggled = false;
 
-        private IDispatcherTimer? _timer = Application.Current.Dispatcher.CreateTimer();
+        private IDispatcherTimer? _timer = Application.Current!.Dispatcher.CreateTimer();
         private IDispatcherTimer? _timer1;
 
         public MainPageViewModel()
@@ -47,7 +47,7 @@ namespace AlarmClock.ViewModels
 
             _timer1 = Application.Current.Dispatcher.CreateTimer();
             _timer1.Interval = TimeSpan.FromSeconds(1);
-            _timer1.Tick += AlarmStart1;
+            _timer1.Tick += AlarmStart1!;
             _timer1.Start();
 
         }
@@ -88,7 +88,7 @@ namespace AlarmClock.ViewModels
         [RelayCommand]
         private void ToggledCommand()
         {
-            if (_timer.IsRunning)
+            if (_timer!.IsRunning)
             {
                 ClockStatus = $"Stape {CurrentTime}";
                 StartButtonEnabled = true;
@@ -103,7 +103,7 @@ namespace AlarmClock.ViewModels
             StartButtonEnabled = false;
             StopButtonEnabled = true;
             _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += AlarmStart;
+            _timer.Tick += AlarmStart!;
             _timer.Start();
         }
 
@@ -115,9 +115,9 @@ namespace AlarmClock.ViewModels
             StartButtonEnabled = false;
             StopButtonEnabled = true;
 
-            _timer = Application.Current.Dispatcher.CreateTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += AlarmStart;
+            //_timer = Application.Current.Dispatcher.CreateTimer();
+            _timer!.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += AlarmStart!;
             _timer.Start();
         }
 
@@ -128,7 +128,7 @@ namespace AlarmClock.ViewModels
             StartButtonEnabled = true;
             StopButtonEnabled = false;
 
-            _timer.Stop();
+            _timer!.Stop();
         }
 
 
